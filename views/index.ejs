@@ -1,4 +1,4 @@
-<!DOCTYPE html> mgvcdfcxsdd
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,34 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <h1> May Node and Express be with you. </h1>
+    
     <form action="/quotes" method="POST">
-        <input type="text" placeholder="name" name="name">
-        <input type="text" placeholder="quote" name="quote">
-        <button type="submit">Submit</button>
+        <input type="text" placeholder="enter exercise" name="name">
+        <input type="text" placeholder="enter # of sets" name="sets">
+        <button type="submit">Add Exercise</button>
     </form>
+    
+<!--
 
-    <h2> Quotes </h2>
+<form>
+  <div>
+    <h2>Darth Vadar invades!</h2>
+    <p>
+      Replace first Yoda's quote with a quote written by Darth Vadar
+    </p>
+    <input type="text" placeholder="enter exercise" name="name">
+    <button id="update-button">Replace Yoda's quote</button>
+</div>
+</form>
+    
 
-<ul class="quotes">
-  <!-- Loop through quotes -->
-  <% for(var i = 0; i < quotes.length; i++) {%>
-    <li class="quote">
-      <!-- Output name from the iterated quote object -->
-      <span><%= quotes[i].name %></span>:
-      <!-- Output quote from the iterated quote object -->
-      <span><%= quotes[i].quote %></span>
-    </li>
-  <% } %>
-</ul>
 
-    <div>
-        <h2>Darth Vadar invades!</h2>
-        <p>
-          Replace first Yoda's quote with a quote written by Darth Vadar
-        </p>
-        <button id="update-button">Replace Yoda's quote</button>
-    </div>
 
     <div>
         <h2>Remove Darth Vadar!</h2>
@@ -52,7 +48,57 @@
     <div id="div1">
         
     </div>
-    
+  -->
+
+
+
+
+    <div>
+        <% for(var i = 0; i < quotes.length; i++) {%>
+            <form action="/test" method="POST" >
+                <table id="<%= quotes[i].name %>">
+                    <tr>
+                      <th>Set #</th>
+                      <th>Reps</th>
+                      <th>Weight (lbs)</th>
+                      <th>Previous</th>
+                    </tr>
+
+                    
+                    <input type="text" name="name" value="<%= quotes[i].name %>" >
+                    <% for(var j = 0; j < quotes[i].sets; j++) {%>
+                    
+                      <% if(quotes[i].reps === undefined) {       %>
+                        <tr>
+                          <td> <input type="text" name="sets" value="<%= j %>" > </td>
+                          <td> <input type="text" name="reps" value="<%= quotes[i].reps %>" > </td>
+                          <td> <input type="text" name="weight" value="<%= quotes[i].weight %>" > </td>
+                          <td> <input type="text" name="previous" value="<%= quotes[i].previous %>" > </td>
+                        </tr>
+                      <% } else {  %>
+                      <tr>
+                        <td> <input type="text" name="sets" value="<%= j %>" > </td>
+                        <td> <input type="text" name="reps" value="<%= quotes[i].reps[j] %>" > </td>
+                        <td> <input type="text" name="weight" value="<%= quotes[i].weight[j] %>" > </td>
+                        <td> <input type="text" name="previous" value="<%= quotes[i].previous[j] %>" > </td>
+                      </tr>
+                      <% } %>
+
+                    <% } %>
+                     
+                </table>
+        
+                <button type="submit">Submit</button>
+                <button type="button">Try it</button>
+            </form>
+        <% } %>
+    </div>
+
+
+
+    <p>Click "Try it" to call a function with arguments</p>
+
+<p id="demo"></p>
 
     <script src="/main.js"></script>
 </body>

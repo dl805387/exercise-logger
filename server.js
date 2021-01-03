@@ -17,12 +17,14 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
     const quotesCollection = db.collection('quotes');
     
     // read
+    // this function gets activated when the server starts
     app.get('/', (req, res) => {
         //const cursor = db.collection('quotes').find();
         //console.log(cursor);
         //res.sendFile(__dirname + '/index.html');
-
+        //console.log("start");
         db.collection('quotes').find().toArray().then(results => {
+            //console.log(results);
             res.render('index.ejs', { quotes: results });
         }).catch(error => console.error(error));
     });
@@ -34,10 +36,34 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
         }).catch(error => console.error(error));
     });
 
+    // new routing method
+    app.post('/test', (req, res) => {
+        quotesCollection.findOneAndUpdate(
+            { name: req.body.name },
+            {
+              $set: {
+                name: req.body.name,
+                reps: req.body.reps,
+                weight: req.body.weight,
+                previous: req.body.previous
+              }
+            },
+            {
+              upsert: true
+            }
+
+        ).then(result => {
+            res.redirect('/');
+        }).catch(error => console.error(error));
+    });
+
     // update
     app.put('/quotes', (req, res) => {
+        console.log("this is put");
+        console.log(req.body);
+        console.log(res.body);
         quotesCollection.findOneAndUpdate(
-            { name: 'yoda' },
+            { name: '' },
             {
               $set: {
                 name: req.body.name,
@@ -47,6 +73,7 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
             {
               upsert: true
             }
+
         ).then(result => {
             res.json('Success');
         }).catch(error => console.error(error));
