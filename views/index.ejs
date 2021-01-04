@@ -26,6 +26,7 @@
                         <th>Reps</th>
                         <th>Weight (lbs)</th>
                         <th>Previous</th>
+                        <th>&#10004</th>
                     </tr>
             
                     <input type="text" name="name" value="<%= exercises[i].name %>" >
@@ -37,6 +38,7 @@
                                 <td> <input type="text" name="reps" value="<%= exercises[i].reps %>" > </td>
                                 <td> <input type="text" name="weight" value="<%= exercises[i].weight %>" > </td>
                                 <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" > </td>
+                                <td> <input type="checkbox"> </td>
                             </tr>
                         <% } else {  %>
                             <tr>
@@ -44,15 +46,16 @@
                                 <td> <input type="text" name="reps" value="<%= exercises[i].reps[j] %>" > </td>
                                 <td> <input type="text" name="weight" value="<%= exercises[i].weight[j] %>" > </td>
                                 <td> <input type="text" name="previous" value="<%= exercises[i].previous[j] %>" > </td>
+                                <td> <input type="checkbox"> </td>
                             </tr>
                         <% } %>
                     <% } %>
                 </table>
         
-                <button type="submit" formaction="/test">Submit</button>
-                <button type="submit" formaction="/action_two">Try it</button>
-                <button type="submit" formaction="/action_3">remove</button>
-                <button type="submit" formaction="/action_4">delete</button>
+                <button type="submit" formaction="/update">Update</button>
+                <button type="submit" formaction="/add">&#10133 Set</button>
+                <button type="submit" formaction="/sub">&#10134 Set</button>
+                <button type="submit" formaction="/remove">Remove Exercise</button>
 
             </form>
         <% } %>

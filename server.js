@@ -28,69 +28,66 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
         }).catch(error => console.error(error));
     });
 
-    app.post('/test', (req, res) => {
+    app.post('/update', (req, res) => {
         quotesCollection.findOneAndUpdate(
             { name: req.body.name },
             {
-              $set: {
-                name: req.body.name,
-                reps: req.body.reps,
-                weight: req.body.weight,
-                previous: req.body.previous
-              }
+                $set: {
+                    name: req.body.name,
+                    reps: req.body.reps,
+                    weight: req.body.weight,
+                    previous: req.body.previous
+                }
             },
             {
               upsert: true
             }
-
         ).then(result => {
             res.redirect('/');
         }).catch(error => console.error(error));
     });
     
-    app.post('/action_two', (req, res) => {
+    app.post('/add', (req, res) => {
         quotesCollection.findOneAndUpdate(
             { name: req.body.name },
             {
-              $set: {
-                name: req.body.name,
-                reps: req.body.reps,
-                weight: req.body.weight,
-                previous: req.body.previous,
-                sets: req.body.sets.length + 1
-              }
+                $set: {
+                    name: req.body.name,
+                    reps: req.body.reps,
+                    weight: req.body.weight,
+                    previous: req.body.previous,
+                    sets: req.body.sets.length + 1
+                }
             },
             {
               upsert: true
             }
-
         ).then(result => {
             res.redirect('/');
         }).catch(error => console.error(error));
     });
 
-    app.post('/action_3', (req, res) => {
+    app.post('/sub', (req, res) => {
         quotesCollection.findOneAndUpdate(
             { name: req.body.name },
             {
-              $set: {
-                name: req.body.name,
-                reps: req.body.reps,
-                weight: req.body.weight,
-                previous: req.body.previous,
-                sets: req.body.sets.length - 1
-              }
+                $set: {
+                    name: req.body.name,
+                    reps: req.body.reps,
+                    weight: req.body.weight,
+                    previous: req.body.previous,
+                    sets: req.body.sets.length - 1
+                }
             },
             {
               upsert: true
             }
-
         ).then(result => {
             res.redirect('/');
         }).catch(error => console.error(error));
     });
 
-    app.post('/action_4', (req, res) => {
+    app.post('/remove', (req, res) => {
         quotesCollection.deleteOne(
             { name: req.body.name }
         ).then(result => {
