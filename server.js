@@ -8,21 +8,21 @@ app.use(express.static('public'));
 app.use(bodyParser.json())
 
 const MongoClient = require('mongodb').MongoClient;
-const connectionString = "mongodb+srv://duser:97cDsT5j@cluster0.q3kwg.mongodb.net/test?retryWrites=true&w=majority";
+const connectionString = "mongodb+srv://duser:97cDsT5j@cluster0.q3kwg.mongodb.net/workout?retryWrites=true&w=majority";
 const mongoOptions = {useNewUrlParser : true, useUnifiedTopology: true};
 
 MongoClient.connect(connectionString, mongoOptions).then(client => {
     console.log('Connected to Database');
-    const db = client.db('star-wars-quotes');
-    const quotesCollection = db.collection('quotes');
+    const db = client.db('workout');
+    const quotesCollection = db.collection('exercises');
     
     app.get('/', (req, res) => {
-        db.collection('quotes').find().toArray().then(results => {
-            res.render('index.ejs', { quotes: results });
+        db.collection('exercises').find().toArray().then(results => {
+            res.render('index.ejs', { exercises: results });
         }).catch(error => console.error(error));
     });
     
-    app.post('/quotes', (req, res) => {
+    app.post('/insert', (req, res) => {
         quotesCollection.insertOne(req.body).then(result => {
             res.redirect('/');
         }).catch(error => console.error(error));
