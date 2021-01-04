@@ -16,20 +16,12 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
     const db = client.db('star-wars-quotes');
     const quotesCollection = db.collection('quotes');
     
-    // read
-    // this function gets activated when the server starts
     app.get('/', (req, res) => {
-        //const cursor = db.collection('quotes').find();
-        //console.log(cursor);
-        //res.sendFile(__dirname + '/index.html');
-        //console.log("start");
         db.collection('quotes').find().toArray().then(results => {
-            //console.log(results);
             res.render('index.ejs', { quotes: results });
         }).catch(error => console.error(error));
     });
     
-    // create
     app.post('/quotes', (req, res) => {
         quotesCollection.insertOne(req.body).then(result => {
             res.redirect('/');
