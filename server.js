@@ -36,7 +36,6 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
         }).catch(error => console.error(error));
     });
 
-    // new routing method
     app.post('/test', (req, res) => {
         quotesCollection.findOneAndUpdate(
             { name: req.body.name },
@@ -56,7 +55,7 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
             res.redirect('/');
         }).catch(error => console.error(error));
     });
-    //action_two
+    
     app.post('/action_two', (req, res) => {
         quotesCollection.findOneAndUpdate(
             { name: req.body.name },
@@ -99,49 +98,57 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
         }).catch(error => console.error(error));
     });
 
-
-
-
-
-
-
-
-
-
-    // update
-    app.put('/quotes', (req, res) => {
-        console.log("this is put");
-        console.log(req.body);
-        console.log(res.body);
-        quotesCollection.findOneAndUpdate(
-            { name: '' },
-            {
-              $set: {
-                name: req.body.name,
-                quote: req.body.quote
-              }
-            },
-            {
-              upsert: true
-            }
-
+    app.post('/action_4', (req, res) => {
+        quotesCollection.deleteOne(
+            { name: req.body.name }
         ).then(result => {
-            res.json('Success');
+            res.redirect('/');
         }).catch(error => console.error(error));
     });
 
-    app.delete('/quotes', (req, res) => {
-        quotesCollection.deleteOne(
-            { name: req.body.name }
-          )
-            .then(result => {
-                if (result.deletedCount === 0) {
-                    return res.json('No quote to delete')
-                  };
-              res.json(`Deleted Darth Vadar's quote`)
-            })
-            .catch(error => console.error(error));
-    });
+
+
+
+
+
+
+
+
+
+    // // update
+    // app.put('/quotes', (req, res) => {
+    //     console.log("this is put");
+    //     console.log(req.body);
+    //     console.log(res.body);
+    //     quotesCollection.findOneAndUpdate(
+    //         { name: '' },
+    //         {
+    //           $set: {
+    //             name: req.body.name,
+    //             quote: req.body.quote
+    //           }
+    //         },
+    //         {
+    //           upsert: true
+    //         }
+
+    //     ).then(result => {
+    //         res.json('Success');
+    //     }).catch(error => console.error(error));
+    // });
+
+    // app.delete('/quotes', (req, res) => {
+    //     quotesCollection.deleteOne(
+    //         { name: req.body.name }
+    //       )
+    //         .then(result => {
+    //             if (result.deletedCount === 0) {
+    //                 return res.json('No quote to delete')
+    //               };
+    //           res.json(`Deleted Darth Vadar's quote`)
+    //         })
+    //         .catch(error => console.error(error));
+    // });
     
     app.listen(3000, function() {
         console.log('listening on 3000');
