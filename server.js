@@ -38,6 +38,7 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
 
     // new routing method
     app.post('/test', (req, res) => {
+        console.log("action 1");
         quotesCollection.findOneAndUpdate(
             { name: req.body.name },
             {
@@ -56,6 +57,53 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
             res.redirect('/');
         }).catch(error => console.error(error));
     });
+    //action_two
+    app.post('/action_two', (req, res) => {
+        quotesCollection.findOneAndUpdate(
+            { name: req.body.name },
+            {
+              $set: {
+                sets: req.body.sets.length + 1
+              }
+            },
+            {
+              upsert: true
+            }
+
+        ).then(result => {
+            res.redirect('/');
+        }).catch(error => console.error(error));
+    });
+
+    app.post('/action_3', (req, res) => {
+        quotesCollection.findOneAndUpdate(
+            { name: req.body.name },
+            {
+              $set: {
+                sets: req.body.sets.length - 1,
+                name: req.body.name,
+                reps: req.body.reps,
+                weight: req.body.weight,
+                previous: req.body.previous
+              }
+            },
+            {
+              upsert: true
+            }
+
+        ).then(result => {
+            res.redirect('/');
+        }).catch(error => console.error(error));
+    });
+
+
+
+
+
+
+
+
+
 
     // update
     app.put('/quotes', (req, res) => {
