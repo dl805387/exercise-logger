@@ -68,23 +68,42 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
     });
 
     app.post('/sub', (req, res) => {
-        quotesCollection.findOneAndUpdate(
-            { name: req.body.name },
-            {
-                $set: {
-                    name: req.body.name,
-                    reps: req.body.reps,
-                    weight: req.body.weight,
-                    previous: req.body.previous,
-                    sets: req.body.sets.length - 1
+        if (req.body.sets.length === 1) {
+            quotesCollection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous
+                    }
+                },
+                {
+                  upsert: true
                 }
-            },
-            {
-              upsert: true
-            }
-        ).then(result => {
-            res.redirect('/');
-        }).catch(error => console.error(error));
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        } else {
+            quotesCollection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous,
+                        sets: req.body.sets.length - 1
+                    }
+                },
+                {
+                  upsert: true
+                }
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        }
     });
 
     app.post('/remove', (req, res) => {
@@ -94,50 +113,6 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
             res.redirect('/');
         }).catch(error => console.error(error));
     });
-
-
-
-
-
-
-
-
-
-
-    // // update
-    // app.put('/quotes', (req, res) => {
-    //     console.log("this is put");
-    //     console.log(req.body);
-    //     console.log(res.body);
-    //     quotesCollection.findOneAndUpdate(
-    //         { name: '' },
-    //         {
-    //           $set: {
-    //             name: req.body.name,
-    //             quote: req.body.quote
-    //           }
-    //         },
-    //         {
-    //           upsert: true
-    //         }
-
-    //     ).then(result => {
-    //         res.json('Success');
-    //     }).catch(error => console.error(error));
-    // });
-
-    // app.delete('/quotes', (req, res) => {
-    //     quotesCollection.deleteOne(
-    //         { name: req.body.name }
-    //       )
-    //         .then(result => {
-    //             if (result.deletedCount === 0) {
-    //                 return res.json('No quote to delete')
-    //               };
-    //           res.json(`Deleted Darth Vadar's quote`)
-    //         })
-    //         .catch(error => console.error(error));
-    // });
     
     app.listen(3000, function() {
         console.log('listening on 3000');
