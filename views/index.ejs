@@ -10,11 +10,20 @@
 
     <h1> Workout Log </h1>
     
+    <!-- The var str will hold the values of all the exercise names. -->
+    <!-- This string will be used in the validateForm method, in which it will be converted into an array. -->
+    <% var str = ""; %>
+    <% for(var i = 0; i < exercises.length; i++) {%>
+        <% str += exercises[i].name + " " %>
+    <% } %>
+    <!-- Removes the last character which is a space. This is done so that str can be turned into an array. -->
+    <% str = str.slice(0, -1) %>
+
     <!-- This form will trigger app.post('/insert') to create the exercise in the database -->
     <!-- User must fill out input field and number of sets cannot be less than 1. -->
-    <form action="/insert" method="POST" name="myForm" onsubmit="return validateForm()" >
-        <input type="text" placeholder="enter exercise" name="name">
-        <input type="number" placeholder="enter # of sets" name="sets" min="1" max="99">
+    <form action="/insert" method="POST" name="myForm" onsubmit="return validateForm('<%=str%>')">
+        <input type="text" placeholder="enter exercise" name="name" id="nameField">
+        <input type="number" placeholder="enter # of sets" name="sets" min="1" max="99" id="setsField">
         <button type="submit">Add Exercise</button>
     </form>
 
