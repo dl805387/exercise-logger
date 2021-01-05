@@ -10,6 +10,8 @@
 
     <h1> Workout Log </h1>
     
+    <!-- This form will trigger app.post('/insert') to create the exercise in the database -->
+    <!-- Number of sets cannot be less than 1. -->
     <form action="/insert" method="POST">
         <input type="text" placeholder="enter exercise" name="name">
         <input type="number" placeholder="enter # of sets" name="sets" min="1" max="99">
@@ -17,12 +19,14 @@
     </form>
 
     <div>
+        <!-- The variable exercises contain the data from the documents of the database. -->
+        <!-- Loops through all the exercises to create a table. -->
         <% for(var i = 0; i < exercises.length; i++) {%>
-            <form action="/test" method="POST" >
+            <form method="POST" >
 
                 <table>
                     <tr>
-                        <th>Set #</th>
+                        <th>Sets</th>
                         <th>Reps</th>
                         <th>Weight (lbs)</th>
                         <th>Previous</th>
@@ -30,6 +34,8 @@
                     </tr>
             
                     <input type="text" name="name" value="<%= exercises[i].name %>" >
+
+                    <!-- This if statement check to see if number of sets is going from 1 to 2. This determines how the table is created. -->
                     <% if (exercises[i].setOneToTwo == true) {%>
                         <tr>
                             <td> <input type="text" name="sets" value="<%= 1 %>" > </td>
@@ -47,7 +53,9 @@
                             <td> <input type="checkbox"> </td>
                         </tr>
                     <% } else { %>
-                        <% for (var j = 0; j < exercises[i].sets; j++) {%>          
+                        <% for (var j = 0; j < exercises[i].sets; j++) {%>   
+                            <!-- This if statement will create a table when there is only 1 set. -->     
+                            <!-- This is done because if the exercise only have 1 set, then the data in the document is not an array. -->  
                             <% if (exercises[i].onlyOneSet === undefined || exercises[i].onlyOneSet == true) { %>
                             
                                 <tr>
@@ -58,6 +66,7 @@
                                     <td> <input type="checkbox"> </td>
                                 </tr>
                             <% } else { %>
+                                <!-- Creates table if the number of sets is greater than 1. -->
                                 <tr>
                                     <td> <input type="text" name="sets" value="<%= j + 1 %>" > </td>
                                     <td> <input type="text" name="reps" value="<%= exercises[i].reps[j] %>" > </td>

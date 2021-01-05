@@ -16,19 +16,23 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
     const db = client.db('workout');
     const quotesCollection = db.collection('exercises');
     
+    // Passes the data from the database into the index.ejs file.
     app.get('/', (req, res) => {
         db.collection('exercises').find().toArray().then(results => {
             res.render('index.ejs', { exercises: results });
         }).catch(error => console.error(error));
     });
     
+    // Creates exercise and adds it into the database.
     app.post('/insert', (req, res) => {
         quotesCollection.insertOne(req.body).then(result => {
             res.redirect('/');
         }).catch(error => console.error(error));
     });
 
+    // Updates the exercise in the database document.
     app.post('/update', (req, res) => {
+        // This if statement checks to see if there is only 1 set. This determines how the table is creates in the index.ejs file.
         if (req.body.sets.length == 1) {
             quotesCollection.findOneAndUpdate(
                 { name: req.body.name },
@@ -70,7 +74,9 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
         }
     });
     
+    // Increases the sets by 1, which adds a row to the table.
     app.post('/add', (req, res) => {
+        // This if statement checks to see if there is only 1 set. Going from 1 set to 2 set will change how the table is created.
         if (req.body.sets.length == 1) {
             quotesCollection.findOneAndUpdate(
                 { name: req.body.name },
@@ -117,7 +123,9 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
         
     });
 
+    // Decreases the sets by 1, which removes a row from the table.
     app.post('/sub', (req, res) => {
+        // This if statement prevents the number of sets to go below 1.
         if (req.body.sets.length == 1) {
             quotesCollection.findOneAndUpdate(
                 { name: req.body.name },
@@ -160,6 +168,7 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
         }
     });
 
+    // Removes the exercise from the database.
     app.post('/remove', (req, res) => {
         quotesCollection.deleteOne(
             { name: req.body.name }
@@ -173,8 +182,6 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
     });
 
 }).catch(error => console.error(error));
-
-
 
 // npm run dev
 // control c
