@@ -30,24 +30,42 @@
                     </tr>
             
                     <input type="text" name="name" value="<%= exercises[i].name %>" >
+                    <% if (exercises[i].setOneToTwo == true) {%>
+                        <tr>
+                            <td> <input type="text" name="sets" value="<%= 1 %>" > </td>
+                            <td> <input type="text" name="reps" value="<%= exercises[i].reps %>" > </td>
+                            <td> <input type="text" name="weight" value="<%= exercises[i].weight %>" > </td>
+                            <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" > </td>
+                            <td> <input type="checkbox"> </td>
+                        </tr>
 
-                    <% for(var j = 0; j < exercises[i].sets; j++) {%>          
-                        <% if(exercises[i].reps === undefined) {       %>
-                            <tr>
-                                <td> <input type="text" name="sets" value="<%= j %>" > </td>
-                                <td> <input type="text" name="reps" value="<%= exercises[i].reps %>" > </td>
-                                <td> <input type="text" name="weight" value="<%= exercises[i].weight %>" > </td>
-                                <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" > </td>
-                                <td> <input type="checkbox"> </td>
-                            </tr>
-                        <% } else {  %>
-                            <tr>
-                                <td> <input type="text" name="sets" value="<%= j %>" > </td>
-                                <td> <input type="text" name="reps" value="<%= exercises[i].reps[j] %>" > </td>
-                                <td> <input type="text" name="weight" value="<%= exercises[i].weight[j] %>" > </td>
-                                <td> <input type="text" name="previous" value="<%= exercises[i].previous[j] %>" > </td>
-                                <td> <input type="checkbox"> </td>
-                            </tr>
+                        <tr>
+                            <td> <input type="text" name="sets" value="<%= 2 %>" > </td>
+                            <td> <input type="text" name="reps" value="" > </td>
+                            <td> <input type="text" name="weight" value="" > </td>
+                            <td> <input type="text" name="previous" value="" > </td>
+                            <td> <input type="checkbox"> </td>
+                        </tr>
+                    <% } else { %>
+                        <% for (var j = 0; j < exercises[i].sets; j++) {%>          
+                            <% if (exercises[i].onlyOneSet === undefined || exercises[i].onlyOneSet == true) { %>
+                            
+                                <tr>
+                                    <td> <input type="text" name="sets" value="<%= j + 1 %>" > </td>
+                                    <td> <input type="text" name="reps" value="<%= exercises[i].reps %>" > </td>
+                                    <td> <input type="text" name="weight" value="<%= exercises[i].weight %>" > </td>
+                                    <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" > </td>
+                                    <td> <input type="checkbox"> </td>
+                                </tr>
+                            <% } else { %>
+                                <tr>
+                                    <td> <input type="text" name="sets" value="<%= j + 1 %>" > </td>
+                                    <td> <input type="text" name="reps" value="<%= exercises[i].reps[j] %>" > </td>
+                                    <td> <input type="text" name="weight" value="<%= exercises[i].weight[j] %>" > </td>
+                                    <td> <input type="text" name="previous" value="<%= exercises[i].previous[j] %>" > </td>
+                                    <td> <input type="checkbox"> </td>
+                                </tr>
+                            <% } %>
                         <% } %>
                     <% } %>
                 </table>

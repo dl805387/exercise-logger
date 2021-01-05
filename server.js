@@ -29,46 +29,7 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
     });
 
     app.post('/update', (req, res) => {
-        quotesCollection.findOneAndUpdate(
-            { name: req.body.name },
-            {
-                $set: {
-                    name: req.body.name,
-                    reps: req.body.reps,
-                    weight: req.body.weight,
-                    previous: req.body.previous
-                }
-            },
-            {
-              upsert: true
-            }
-        ).then(result => {
-            res.redirect('/');
-        }).catch(error => console.error(error));
-    });
-    
-    app.post('/add', (req, res) => {
-        quotesCollection.findOneAndUpdate(
-            { name: req.body.name },
-            {
-                $set: {
-                    name: req.body.name,
-                    reps: req.body.reps,
-                    weight: req.body.weight,
-                    previous: req.body.previous,
-                    sets: req.body.sets.length + 1
-                }
-            },
-            {
-              upsert: true
-            }
-        ).then(result => {
-            res.redirect('/');
-        }).catch(error => console.error(error));
-    });
-
-    app.post('/sub', (req, res) => {
-        if (req.body.sets.length === 1) {
+        if (req.body.sets.length == 1) {
             quotesCollection.findOneAndUpdate(
                 { name: req.body.name },
                 {
@@ -76,7 +37,9 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         name: req.body.name,
                         reps: req.body.reps,
                         weight: req.body.weight,
-                        previous: req.body.previous
+                        previous: req.body.previous,
+                        setOneToTwo: false,
+                        onlyOneSet: true
                     }
                 },
                 {
@@ -94,7 +57,98 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         reps: req.body.reps,
                         weight: req.body.weight,
                         previous: req.body.previous,
-                        sets: req.body.sets.length - 1
+                        setOneToTwo: false,
+                        onlyOneSet: false
+                    }
+                },
+                {
+                  upsert: true
+                }
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        }
+    });
+    
+    app.post('/add', (req, res) => {
+        if (req.body.sets.length == 1) {
+            quotesCollection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous,
+                        sets: req.body.sets.length + 1,
+                        setOneToTwo: true,
+                        onlyOneSet: false
+                    }
+                },
+                {
+                  upsert: true
+                }
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        } else {
+            quotesCollection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous,
+                        sets: req.body.sets.length + 1,
+                        setOneToTwo: false,
+                        onlyOneSet: false
+                    }
+                },
+                {
+                  upsert: true
+                }
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        }
+
+
+        
+    });
+
+    app.post('/sub', (req, res) => {
+        if (req.body.sets.length == 1) {
+            quotesCollection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous,
+                        setOneToTwo: false,
+                        onlyOneSet: true
+                    }
+                },
+                {
+                  upsert: true
+                }
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        } else {
+            quotesCollection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous,
+                        sets: req.body.sets.length - 1,
+                        setOneToTwo: false,
+                        onlyOneSet: false
                     }
                 },
                 {
