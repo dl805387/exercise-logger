@@ -28,7 +28,7 @@
     </form>
 
     <div>
-        <!-- The variable exercises contain the data from the documents of the database. -->
+        <!-- The variable 'exercises' contains the data of the documents from the database. -->
         <!-- Loops through all the exercises to create a table. -->
         <% for(var i = 0; i < exercises.length; i++) { %>
             <form method="POST" >
@@ -50,7 +50,23 @@
                             <td> <input type="text" name="sets" value="<%= 1 %>" readonly> </td>
                             <td> <input type="text" name="reps" value="<%= exercises[i].reps %>" > </td>
                             <td> <input type="text" name="weight" value="<%= exercises[i].weight %>" > </td>
-                            <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" > </td>
+                            
+                            <!-- Checks to see if the user wants to setup previous weight x reps. -->
+                            <% if (exercises[i].pre == true) { %>
+
+                                <!-- Produce different outputs depending on which input field the user fills. -->
+                                <% if (exercises[i].reps == "") { %>
+                                    <td> <input type="text" name="previous" value="" readonly> </td>
+                                <% } else if (exercises[i].weight == "") { %>
+                                    <td> <input type="text" name="previous" value="<%= exercises[i].reps + ' reps' %>" readonly> </td>
+                                <% } else { %>
+                                    <td> <input type="text" name="previous" value="<%= exercises[i].weight + ' lb x ' + exercises[i].reps %>" readonly> </td>
+                                <% } %>
+
+                            <% } else { %>
+                                <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" readonly> </td>
+                            <% } %>
+
                             <td> <input type="checkbox"> </td>
                         </tr>
 
@@ -58,10 +74,11 @@
                             <td> <input type="text" name="sets" value="<%= 2 %>" readonly> </td>
                             <td> <input type="text" name="reps" value="" > </td>
                             <td> <input type="text" name="weight" value="" > </td>
-                            <td> <input type="text" name="previous" value="" > </td>
+                            <td> <input type="text" name="previous" value="" readonly> </td>
                             <td> <input type="checkbox"> </td>
                         </tr>
                     <% } else { %>
+                        <!-- For each exercise, this loop will create a row for each set. -->
                         <% for (var j = 0; j < exercises[i].sets; j++) { %>   
                             <!-- This if statement will create a table when there is only 1 set. -->     
                             <!-- This is done because if the exercise only have 1 set, then the data in the document is not an array. -->  
@@ -71,7 +88,22 @@
                                     <td> <input type="text" name="sets" value="<%= j + 1 %>" readonly> </td>
                                     <td> <input type="text" name="reps" value="<%= exercises[i].reps %>" > </td>
                                     <td> <input type="text" name="weight" value="<%= exercises[i].weight %>" > </td>
-                                    <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" > </td>
+
+                                    <!-- Checking for previous setup. -->
+                                    <% if (exercises[i].pre == true) { %>
+
+                                        <% if (exercises[i].reps == "") { %>
+                                            <td> <input type="text" name="previous" value="" readonly> </td>
+                                        <% } else if (exercises[i].weight == "") { %>
+                                            <td> <input type="text" name="previous" value="<%= exercises[i].reps + ' reps' %>" readonly> </td>
+                                        <% } else { %>
+                                            <td> <input type="text" name="previous" value="<%= exercises[i].weight + ' lb x ' + exercises[i].reps %>" readonly> </td>
+                                        <% } %>
+                                        
+                                    <% } else { %>
+                                        <td> <input type="text" name="previous" value="<%= exercises[i].previous %>" readonly> </td>
+                                    <% } %>
+
                                     <td> <input type="checkbox"> </td>
                                 </tr>
                             <% } else { %>
@@ -80,7 +112,22 @@
                                     <td> <input type="text" name="sets" value="<%= j + 1 %>" readonly> </td>
                                     <td> <input type="text" name="reps" value="<%= exercises[i].reps[j] %>" > </td>
                                     <td> <input type="text" name="weight" value="<%= exercises[i].weight[j] %>" > </td>
-                                    <td> <input type="text" name="previous" value="<%= exercises[i].previous[j] %>" > </td>
+                        
+                                    <!-- Checking for previous setup. -->
+                                    <% if (exercises[i].pre == true) { %>
+
+                                        <% if (exercises[i].reps[j] == "") { %>
+                                            <td> <input type="text" name="previous" value="" readonly> </td>
+                                        <% } else if (exercises[i].weight[j] == "") { %>
+                                            <td> <input type="text" name="previous" value="<%= exercises[i].reps[j] + ' reps' %>" readonly> </td>
+                                        <% } else { %>
+                                            <td> <input type="text" name="previous" value="<%= exercises[i].weight[j] + ' lb x ' + exercises[i].reps[j] %>" readonly> </td>
+                                        <% } %>
+
+                                    <% } else { %>
+                                        <td> <input type="text" name="previous" value="<%= exercises[i].previous[j] %>" readonly> </td>
+                                    <% } %>
+
                                     <td> <input type="checkbox"> </td>
                                 </tr>
                             <% } %>
@@ -88,9 +135,11 @@
                     <% } %>
                 </table>
         
+                <!-- These buttons will trigger post methods from the server side. -->
                 <button type="submit" formaction="/update">Update</button>
                 <button type="submit" formaction="/add">&#10133 Set</button>
                 <button type="submit" formaction="/sub">&#10134 Set</button>
+                <button type="submit" formaction="/previous">Setup Previous</button>
                 <button type="submit" formaction="/remove">Remove Exercise</button>
 
             </form>

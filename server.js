@@ -44,7 +44,8 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         weight: req.body.weight,
                         previous: req.body.previous,
                         setOneToTwo: false,
-                        onlyOneSet: true
+                        onlyOneSet: true,
+                        pre: false
                     }
                 },
                 {
@@ -63,7 +64,8 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         weight: req.body.weight,
                         previous: req.body.previous,
                         setOneToTwo: false,
-                        onlyOneSet: false
+                        onlyOneSet: false,
+                        pre: false
                     }
                 },
                 {
@@ -89,7 +91,8 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         previous: req.body.previous,
                         sets: req.body.sets.length + 1,
                         setOneToTwo: true,
-                        onlyOneSet: false
+                        onlyOneSet: false,
+                        pre: false
                     }
                 },
                 {
@@ -109,7 +112,8 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         previous: req.body.previous,
                         sets: req.body.sets.length + 1,
                         setOneToTwo: false,
-                        onlyOneSet: false
+                        onlyOneSet: false,
+                        pre: false
                     }
                 },
                 {
@@ -137,7 +141,8 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         weight: req.body.weight,
                         previous: req.body.previous,
                         setOneToTwo: false,
-                        onlyOneSet: true
+                        onlyOneSet: true,
+                        pre: false
                     }
                 },
                 {
@@ -157,7 +162,54 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
                         previous: req.body.previous,
                         sets: req.body.sets.length - 1,
                         setOneToTwo: false,
-                        onlyOneSet: false
+                        onlyOneSet: false,
+                        pre: false
+                    }
+                },
+                {
+                  upsert: true
+                }
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        }
+    });
+
+    // Sets pre to true, which allows the user to see weight x reps.
+    // User can use this to save their data before they change it.
+    app.post('/previous', (req, res) => {
+        if (req.body.sets.length == 1) {
+            collection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous,
+                        setOneToTwo: false,
+                        onlyOneSet: true,
+                        pre: true
+                    }
+                },
+                {
+                  upsert: true
+                }
+            ).then(result => {
+                res.redirect('/');
+            }).catch(error => console.error(error));
+        } else {
+            collection.findOneAndUpdate(
+                { name: req.body.name },
+                {
+                    $set: {
+                        name: req.body.name,
+                        reps: req.body.reps,
+                        weight: req.body.weight,
+                        previous: req.body.previous,
+                        setOneToTwo: false,
+                        onlyOneSet: false,
+                        pre: true
                     }
                 },
                 {
