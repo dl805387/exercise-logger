@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Log</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Exercise Logger</title>
 </head>
 <body>
 
@@ -33,7 +34,8 @@
         <% for(var i = 0; i < exercises.length; i++) { %>
             <form method="POST" >
 
-                <table>
+                <table class="table is-bordered is-hoverable">
+                    <thead>
                     <tr>
                         <th>Sets</th>
                         <th>Reps</th>
@@ -41,6 +43,7 @@
                         <th>Previous</th>
                         <th>&#10004</th>
                     </tr>
+                    </thead>
             
                     <input type="text" name="name" value="<%= exercises[i].name %>" readonly>
 
@@ -145,6 +148,8 @@
             </form>
         <% } %>
     </div>
+
+    <p class="sad">hello</p>
 
     <script src="/main.js"></script>
 </body>
