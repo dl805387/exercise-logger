@@ -1,7 +1,52 @@
-.table th {
-    background-color: #1273b4;
+table th {
+    background-color: #28a4f7;
+    color:rgb(255, 255, 255) !important;
+    text-align: left !important;
 }
 
-.sad {
-    color: #1273b4;
+table, th, td {
+    border: 1px solid black !important;
 }
+
+table input {
+    border: none;
+    outline: none;
+    font-size: 14pt;
+}
+
+table td input {
+    display: block;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 1% !important;
+}
+
+.sets {
+    width:1% !important;
+}
+
+.button {
+    margin-bottom: 3%;
+}
+
+.center {
+    margin: auto;
+    width: 60%;
+}
+
+.input {
+    border: none;
+    outline: none;
+    padding: 0%;
+    height: 40px;
+}
+
+
+
+
+
+
+

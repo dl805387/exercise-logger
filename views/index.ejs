@@ -28,16 +28,18 @@
         <button type="submit">Add Exercise</button>
     </form>
 
-    <div>
+    <div class="center">
         <!-- The variable 'exercises' contains the data of the documents from the database. -->
         <!-- Loops through all the exercises to create a table. -->
         <% for(var i = 0; i < exercises.length; i++) { %>
             <form method="POST" >
 
-                <table class="table is-bordered is-hoverable">
+                <input class="input is-large" type="text" name="name" value="<%= exercises[i].name %>" readonly>
+
+                <table class="table is-bordered">
                     <thead>
                     <tr>
-                        <th>Sets</th>
+                        <th class="sets">Sets</th>
                         <th>Reps</th>
                         <th>Weight (lbs)</th>
                         <th>Previous</th>
@@ -45,7 +47,7 @@
                     </tr>
                     </thead>
             
-                    <input type="text" name="name" value="<%= exercises[i].name %>" readonly>
+                    
 
                     <!-- This if statement check to see if number of sets is going from 1 to 2. This determines how the table is created. -->
                     <% if (exercises[i].setOneToTwo == true) { %>
@@ -139,17 +141,15 @@
                 </table>
         
                 <!-- These buttons will trigger post methods from the server side. -->
-                <button type="submit" formaction="/update">Update</button>
-                <button type="submit" formaction="/add">&#10133 Set</button>
-                <button type="submit" formaction="/sub">&#10134 Set</button>
-                <button type="submit" formaction="/previous">Setup Previous</button>
-                <button type="submit" formaction="/remove">Remove Exercise</button>
+                <button class="button" type="submit" formaction="/update">Update</button>
+                <button class="button" type="submit" formaction="/add">&#10133 Set</button>
+                <button class="button" type="submit" formaction="/sub">&#10134 Set</button>
+                <button class="button" type="submit" formaction="/previous">Setup Previous</button>
+                <button class="button" type="submit" formaction="/remove">Remove Exercise</button>
 
             </form>
         <% } %>
     </div>
-
-    <p class="sad">hello</p>
 
     <script src="/main.js"></script>
 </body>
