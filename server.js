@@ -239,3 +239,7 @@ MongoClient.connect(connectionString, mongoOptions).then(client => {
 // npm run dev
 // control c
 // git add -A
+
+// can also open with node server.js
+// sometimes this won't work if mongoDB doesnt have your current address
+// you can go to the database, click on network address, then add your current address
