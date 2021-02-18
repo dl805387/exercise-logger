@@ -37,12 +37,41 @@ table {
     width: 60%;
 }
 
-.input {
+#exerciseName {
     border: none;
     outline: none;
     padding: 0%;
     height: 40px;
+    font-weight: bold;
+    background: transparent;
 }
+
+#nameField {
+    width: 20%;
+    margin: 1%;
+}
+
+#setsField {
+    width: 15%;
+    margin: 1%;
+    margin-left: 0%;
+}
+
+#addExercise {
+    margin: 1%;
+    margin-left: 0%;
+}
+
+.title {
+    margin: 1%;
+    margin-bottom: 0% !important;
+}
+
+body {
+    background-color: red; /* For browsers that do not support gradients */
+  background-image: linear-gradient(rgb(255, 255, 255), rgb(219, 219, 218));
+}
+
 
 
 

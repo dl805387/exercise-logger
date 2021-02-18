@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <h1> Workout Log </h1>
+    <h1 class="title is-2">Exercise Logger</h1>
     
     <!-- The var str will hold the values of all the exercise names. -->
     <!-- This string will be used in the validateForm method, in which it will be converted into an array. -->
@@ -23,9 +23,9 @@
     <!-- This form will trigger app.post('/insert') to create the exercise in the database -->
     <!-- User must fill out input field and number of sets cannot be less than 1. -->
     <form action="/insert" method="POST" name="myForm" onsubmit="return validateForm('<%=str%>')" required>
-        <input type="text" placeholder="enter exercise" name="name" id="nameField">
-        <input type="number" placeholder="enter # of sets" name="sets" min="1" max="99" id="setsField">
-        <button type="submit">Add Exercise</button>
+        <input type="text" placeholder="enter exercise" name="name" id="nameField" class="input is-rounded">
+        <input type="number" placeholder="enter # of sets" name="sets" min="1" max="99" id="setsField" class="input is-rounded">
+        <button class="button is-success is-outlined" id="addExercise" type="submit">Add Exercise</button>
     </form>
 
     <div class="center">
@@ -34,7 +34,7 @@
         <% for(var i = 0; i < exercises.length; i++) { %>
             <form method="POST" >
 
-                <input class="input is-large" type="text" name="name" value="<%= exercises[i].name %>" readonly>
+                <input class="input is-large" id="exerciseName" type="text" name="name" value="<%= exercises[i].name %>" readonly>
 
                 <table class="table is-bordered">
                     <thead>
@@ -46,8 +46,6 @@
                         <th>&#10004</th>
                     </tr>
                     </thead>
-            
-                    
 
                     <!-- This if statement check to see if number of sets is going from 1 to 2. This determines how the table is created. -->
                     <% if (exercises[i].setOneToTwo == true) { %>
