@@ -68,7 +68,8 @@ table {
 
 body {
     background-color: rgb(255, 255, 255); /* background will be white for browsers that don't support gradient */
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(219, 219, 218));
+    background-image: linear-gradient(#ffffff, rgb(219, 219, 218));
+    min-height: 100vh;
 }
 
 .header {
