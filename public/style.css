@@ -63,13 +63,22 @@ table {
 }
 
 .title {
-    margin: 1%;
     margin-bottom: 0% !important;
 }
 
 body {
-    background-color: red; /* For browsers that do not support gradients */
-  background-image: linear-gradient(rgb(255, 255, 255), rgb(219, 219, 218));
+    background-color: rgb(255, 255, 255); /* background will be white for browsers that don't support gradient */
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(219, 219, 218));
+}
+
+.header {
+    display: flex;
+    height: 50px;
+    margin: 1%;
+}
+
+.logo {
+    margin-left: 2%;
 }
 
 
